@@ -20,9 +20,16 @@
 """
 
 from collections import defaultdict
-
+import csv
+from datetime import datetime
+import os
 import numpy as np
 from src.bounding_box import BBFormat
+
+output_directory = r"/Users/rohitabraham/Data_Work/AIXI/PR_curve_data_dump"
+current_time = datetime.now()
+formatted_time = current_time.strftime("%Y%m%d_%H%M%S")
+filename_with_path = os.path.join(output_directory, f'pr_curve_data_{formatted_time}.csv')
 
 
 def get_coco_summary(groundtruth_bbs, detected_bbs):
@@ -73,7 +80,7 @@ def get_coco_summary(groundtruth_bbs, detected_bbs):
         for class_id in _evals:
             acc = _evals[class_id]
             acc["scores"] = np.concatenate(acc["scores"])
-            acc["matched"] = np.concatenate(acc["matched"]).astype(np.bool)
+            acc["matched"] = np.concatenate(acc["matched"]).astype(np.bool_)
             acc["NP"] = np.sum(acc["NP"])
 
         res = []
@@ -401,6 +408,15 @@ def _compute_ap_recall(scores, matched, NP, recall_thresholds=None):
 
     # get interpolated precision values at the evaluation thresholds
     i_pr = np.array([i_pr[r] if r < len(i_pr) else 0 for r in rec_idx])
+
+    with open(filename_with_path, 'w', newline='') as csvfile:
+        fieldnames = ['precision', 'recall']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        for p, r in zip(pr, rc):
+            writer.writerow({'precision': p, 'recall': r})
+    
 
     return {
         "precision": pr,

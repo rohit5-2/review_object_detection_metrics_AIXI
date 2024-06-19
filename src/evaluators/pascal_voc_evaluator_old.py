@@ -9,10 +9,6 @@ from src.bounding_box import BoundingBox
 from src.utils.enumerators import (BBFormat, CoordinatesType,
                                    MethodAveragePrecision)
 
-import datetime
-import csv
-
-
 
 def calculate_ap_every_point(rec, prec):
     mrec = []
@@ -246,17 +242,6 @@ def plot_precision_recall_curve(results,
         mpre = result['interpolated precision']
         mrec = result['interpolated recall']
         method = result['method']
-
-        filename = datetime.datetime.now().strftime(f"{classId}_%Y-%m-%d_%H-%M-%S.csv")
-        full_path = os.path.join('/Users/rohitabraham/Data_Work/AIXI/new_PR_curve_data', filename) if savePath else filename
-        
-        with open(full_path, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(['Recall', 'Precision', 'Interpolated Recall', 'Interpolated Precision'])
-            for rec, prec, m_r, m_p in zip(recall, precision, mrec, mpre):
-                writer.writerow([rec, prec, m_r, m_p])
-
-
         if showInterpolatedPrecision:
             if method == MethodAveragePrecision.EVERY_POINT_INTERPOLATION:
                 plt.plot(mrec, mpre, '--r', label='Interpolated precision (every point)')
@@ -309,6 +294,9 @@ def plot_precision_recall_curves(results,
         mpre = result['interpolated precision']
         mrec = result['interpolated recall']
         method = result['method']
+
+
+        
         plt.close()
         if showInterpolatedPrecision:
             if method == MethodAveragePrecision.EVERY_POINT_INTERPOLATION:

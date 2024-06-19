@@ -41,7 +41,7 @@ class Main_Dialog(QMainWindow, Main_UI):
         desktopSize = QtWidgets.QDesktopWidget().screenGeometry()
         top = (desktopSize.height() / 2) - (size.height() / 2)
         left = (desktopSize.width() / 2) - (size.width() / 2)
-        self.move(left, top)
+        self.move(int(left), int(top))
 
     def closeEvent(self, event):
         conf = self.show_popup('Are you sure you want to close the program?',
