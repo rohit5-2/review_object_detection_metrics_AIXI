@@ -26,10 +26,10 @@ import os
 import numpy as np
 from src.bounding_box import BBFormat
 
-output_directory = r"/Users/rohitabraham/Data_Work/AIXI/PR_curve_data_dump"
+output_directory = "PR_curve_data/" # output for CSV file - change if needed
 current_time = datetime.now()
 formatted_time = current_time.strftime("%Y%m%d_%H%M%S")
-filename_with_path = os.path.join(output_directory, f'pr_curve_data_{formatted_time}.csv')
+filename_with_path = os.path.join(output_directory, f'pr_curve_data_{formatted_time}.csv') 
 
 
 def get_coco_summary(groundtruth_bbs, detected_bbs):

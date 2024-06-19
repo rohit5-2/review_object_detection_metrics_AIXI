@@ -11,7 +11,7 @@ from src.utils.enumerators import (BBFormat, CoordinatesType,
 
 import datetime
 import csv
-
+output_dir = 'PR_curve_data/'
 
 
 def calculate_ap_every_point(rec, prec):
@@ -248,7 +248,7 @@ def plot_precision_recall_curve(results,
         method = result['method']
 
         filename = datetime.datetime.now().strftime(f"{classId}_%Y-%m-%d_%H-%M-%S.csv")
-        full_path = os.path.join('/Users/rohitabraham/Data_Work/AIXI/new_PR_curve_data', filename) if savePath else filename
+        full_path = os.path.join(output_dir, filename) if savePath else filename
         
         with open(full_path, 'w', newline='') as file:
             writer = csv.writer(file)
